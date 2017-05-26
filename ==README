@@ -1,0 +1,32 @@
+compile each .c with mpicc
+
+program does this:
+
+sbuf = aligned allocation of MAX_MSG_SIZE;
+rbuf = "window_size" aligned allocations of MAX_MSG_SIZE;
+
+foreach size ( 1 .. MAX_MSG_SIZE by power of 2) { /* max=4mb */
+
+  /* the loop/window/skip vals have a small and large size */
+
+  /* we initially do "skip" untimed xfers to warm cache */
+  for (i = 0 ; i < skip ; i++) {
+    // do a xfer
+   }
+
+  for (loop = 0 ; i < loop ; i++) {
+    START TIMER
+    for (j = 0 ; j < window_size ; j++) {
+      /* xfer from sender sbuf to rbuf[j] on recv'r */
+      /* each rbuf[j] buffer is a "size" chunk */
+      
+    }
+    END TIMER
+  }
+
+  data_xfer = size * loop * window_size;
+  data_mb = data_xfer / 10e6;
+  MB_per_sec = data_mb / timer_val_in_sec;
+  
+  print result;
+}

@@ -1,0 +1,2 @@
+rm -f *.dat bandwidth.gpi bandwidth.png \
+	osu_put_bw osu_put_fifo osu_put_vm_writev

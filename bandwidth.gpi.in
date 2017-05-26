@@ -1,0 +1,22 @@
+#set term tikz color tikzarrows font '\sffamily \scriptsize' scale 0.7,0.7
+#set output 'bandwidth.tex'
+set term png nocrop 
+set output 'bandwidth.png'
+set key left nobox
+set autoscale
+set grid
+set logscale x 2
+set xtics (4, 16, 64, 256, "1K" 1024, "4K" 4096, "16K" 16384, "256K" 262144, "64K" 65536, "1M" 1048576, "4M" 4194304)
+set ytic auto
+#set border 3
+#set xtics nomirror
+#set ytics nomirror
+set pointsize 1.2
+## XXX: let y autoscale
+##set yrange [0:12000]
+set xrange [1:4*1024*1024]
+set title "OSU MPI Bandwidth Test (HOSTNAME)"
+set xlabel "Message Size (Bytes)"
+set ylabel "Bandwidth (Million Bytes/s)"
+plot "mpi.dat" using 1:2 title "MPI\\_Put()" with linespoint, "fifo.dat" using 1:2 title "mkfifo()" with linespoint, "cma.dat" using 1:2 title "process\\_vm\\_writev()" with linespoint
+

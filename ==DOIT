@@ -1,0 +1,23 @@
+#!/bin/sh -xe
+
+mycc=${MPICC-mpicc}
+myrun=${MPIRUN-mpirun}
+
+$mycc -O -o osu_put_bw osu_put_bw.c
+$mycc -O -o osu_put_fifo osu_put_fifo.c
+$mycc -O -o osu_put_vm_writev osu_put_vm_writev.c
+
+
+$myrun -n 2 ./osu_put_bw        | tee mpi.dat
+$myrun -n 2 ./osu_put_fifo      | tee fifo.dat
+$myrun -n 2 ./osu_put_vm_writev | tee cma.dat
+
+hostname=`hostname`
+cat bandwidth.gpi.in | sed -e "s/HOSTNAME/$hostname/" > bandwidth.gpi
+if [ `which gnuplot` ]; then
+  gnuplot bandwidth.gpi
+else
+  echo run 'gnuplot bandwidth.gpi' on machine with gnuplot
+fi
+
+exit 0
